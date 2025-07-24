@@ -26,4 +26,4 @@ class GameRepository{
     }
 };
 
-module.exports = GameRepository;
+module.exports = new GameRepository();

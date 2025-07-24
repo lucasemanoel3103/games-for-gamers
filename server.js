@@ -1,11 +1,23 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
+const gamesRoutes = require("./src/routes/gamesRoutes")
+const dotenv = require("dotenv")
+const connection = require("./src/database/connection")
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+dotenv.config();
+app.use(express.json());
 
+const PORT = process.env.PORT;
 
-app.listen(3000,() => {
-    console.log("API rodando!");
-})
+app.use("/api", gamesRoutes);
+
+connection.sync()
+  .then(() => {
+    console.log("Banco sincronizado!");
+    app.listen(PORT, () => {
+      console.log(`API rodando na porta ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Erro ao sincronizar banco:", err);
+  });
