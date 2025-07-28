@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 const dotenv = require("dotenv");
-const Game = require("../models/Game")
 
 dotenv.config();
 

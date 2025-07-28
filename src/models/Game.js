@@ -6,25 +6,32 @@ const Game = connection.define("game", {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
   title: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   year: {
     type: DataTypes.INTEGER,
-    allowNull: false
+    allowNull: false,
   },
   producer: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   price: {
     type: DataTypes.DECIMAL(10, 2),
-    allowNull: false
-  }
-
+    allowNull: false,
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: "users",
+      key: "id",
+    },
+  },
 });
 
 module.exports = Game;

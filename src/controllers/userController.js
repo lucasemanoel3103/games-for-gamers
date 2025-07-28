@@ -18,6 +18,7 @@ class UserController {
     const newUser = await userRepository.create(user);
     return res.status(201).json(newUser);
   }
+  
 }
 
 module.exports = new UserController();
