@@ -19,6 +19,21 @@ class UserController {
     return res.status(201).json(newUser);
   }
   
+  async login(req, res){
+    const {email, password} = req.body;
+
+    const existingEmail = await userRepository.findByEmail(email);
+    if (!existingEmail) {
+      return res.status(400).json({ error: "Usuário ou senha incorreta"});
+    }
+    
+    const passwordCompare = await bcrypt.compare(password,existingEmail.password);
+    if(!passwordCompare){
+      return res.status(400).json({ error: "Senha incorreta!"});
+    }else{
+      return res.status(200).json("Login realizado com sucesso!");
+    }
+  }
 }
 
 module.exports = new UserController();
