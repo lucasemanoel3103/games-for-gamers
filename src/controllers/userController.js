@@ -1,5 +1,8 @@
 const userRepository = require("../repositories/userRepository");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 class UserController {
   async create(req, res) {
@@ -18,20 +21,28 @@ class UserController {
     const newUser = await userRepository.create(user);
     return res.status(201).json(newUser);
   }
-  
-  async login(req, res){
-    const {email, password} = req.body;
+
+  async login(req, res) {
+    const { email, password } = req.body;
 
     const existingEmail = await userRepository.findByEmail(email);
     if (!existingEmail) {
-      return res.status(400).json({ error: "Usuário ou senha incorreta"});
+      return res.status(400).json({ error: "Usuário ou senha incorreta" });
     }
-    
-    const passwordCompare = await bcrypt.compare(password,existingEmail.password);
-    if(!passwordCompare){
-      return res.status(400).json({ error: "Senha incorreta!"});
-    }else{
-      return res.status(200).json("Login realizado com sucesso!");
+
+    const passwordCompare = await bcrypt.compare(
+      password,
+      existingEmail.password
+    );
+    if (!passwordCompare) {
+      return res.status(400).json({ error: "Senha incorreta!" });
+    } else {
+      const auth = jwt.sign(
+        { id: existingEmail.id, email: existingEmail.email },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      return res.status(200).json({ message: "Login realizado com sucesso!", token: auth });
     }
   }
 }
