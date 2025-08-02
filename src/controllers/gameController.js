@@ -38,11 +38,17 @@ class GameController {
 
   async create(req, res) {
     const { title, year, producer, price } = req.body;
-    const game = { title, year, producer, price };
+    const userId = req.user?.id;
 
-    if (!game.title || !game.year || !game.producer || !game.price) {
+    if (!title || !year || !producer || !price) {
       return res.status(400).json({ error: "Campos obrigatórios ausentes." });
     }
+
+    if (!userId) {
+      return res.status(401).json({ error: "Usuário não autenticado." });
+    }
+
+    const game = { title, year, producer, price, userId };
 
     const row = await gameRepository.create(game);
     return res.status(201).json(row);
@@ -62,18 +68,16 @@ class GameController {
     return res.status(200).json(row);
   }
 
-  async destroy(req, res){
+  async destroy(req, res) {
     const id = req.params.id;
 
     if (id === undefined) {
-      return res
-        .status(400)
-        .json({ error: "ID não informado!" });
+      return res.status(400).json({ error: "ID não informado!" });
     }
 
     const game = await gameRepository.findById(id);
-    if(!game){
-      return res.status(404).json({error: "Jogo não encontrado!"})
+    if (!game) {
+      return res.status(404).json({ error: "Jogo não encontrado!" });
     }
 
     const deleteCount = await gameRepository.destroy(id);
