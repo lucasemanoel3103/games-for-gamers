@@ -8,10 +8,7 @@ const usersRoutes = require("./src/routes/usersRoutes");
 dotenv.config();
 app.use(express.json());
 
-const User = require("./src/models/User");
-const Game = require("./src/models/Game");
-
-const associations = require("./src/database/associations");
+require("./src/database/associations");
 
 const PORT = process.env.PORT;
 
