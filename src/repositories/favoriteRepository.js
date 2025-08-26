@@ -1,11 +1,11 @@
 const Favorite = require("../models/Favorite");
 
 class FavoriteRepository{
-    create(userId, gameId){
+    favorite(userId, gameId){
         return Favorite.create({ user_id: userId, game_id: gameId })
     }
 
-    delete(userId, gameId){
+    remove(userId, gameId){
         return Favorite.destroy({ where: {user_id: userId, game_id: gameId}})
     }
 
