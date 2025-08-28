@@ -1,7 +1,8 @@
 const Favorite = require("../models/Favorite");
+const Game = require("../models/Game");
 
 class FavoriteRepository{
-    favorite(userId, gameId){
+    create(userId, gameId){
         return Favorite.create({ user_id: userId, game_id: gameId })
     }
 
@@ -14,7 +15,7 @@ class FavoriteRepository{
     }
 
     findAll(userId){
-        return Favorite.findAll({where: {user_id: userId}})
+        return Favorite.findAll({where: {user_id: userId}, include: {model: Game, as: "game", attributes: ['title']}});
     }
 
     countByGame(gameId){

@@ -6,4 +6,5 @@ User.hasMany(Game, {foreignKey: "userId"});
 Game.belongsTo(User, {foreignKey: "userId"});
 User.belongsToMany(Game, { through: Favorite, foreignKey: 'user_id', as: 'favoriteGames' });
 Game.belongsToMany(User, { through: Favorite, foreignKey: 'game_id', as: 'usersWhoFavorited' });
-
+Favorite.belongsTo(Game, { foreignKey: "game_id", as: "game"  });
+Game.hasMany(Favorite, { foreignKey: 'game_id', as: 'favorites' });

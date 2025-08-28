@@ -1,6 +1,8 @@
 const favoriteRepository = require("../repositories/favoriteRepository");
 
 class FavoriteController {
+  
+// Adiciona um jogo aos favoritos
   async favorite(req, res) {
     const { userId, gameId } = req.body;
 
@@ -24,6 +26,7 @@ class FavoriteController {
     return res.status(201).json("Jogo adicionado aos favoritos!");
   }
 
+// Remove um jogo da lista de favoritos 
   async unfavorite(req, res) {
     try {
       const gameId = req.params.id;
@@ -43,6 +46,7 @@ class FavoriteController {
     }
   }
 
+// Retorna todos os jogos da lista de favoritos do usuário
   async getFavorites(req, res) {
     try {
       const userId = req.user?.id;
@@ -59,6 +63,7 @@ class FavoriteController {
     }
   }
 
+// Conta quantos jogos favoritos há na lista do usuário
   async countFavoritesByUser(req, res){
     try {
         const  userId = req.user?.id;
@@ -70,6 +75,7 @@ class FavoriteController {
     }
   }
 
+//Conta quantas vezes um jogo oi favoritado por um usuário
   async countFavoritesByGame(req, res){
     try {
         const gameId = req.params.id;

@@ -23,6 +23,7 @@ class UserController {
   }
 
   async login(req, res) {
+     console.log("REQ BODY:", req.body);
     const { email, password } = req.body;
 
     const existingEmail = await userRepository.findByEmail(email);
