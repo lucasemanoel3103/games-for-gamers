@@ -7,7 +7,7 @@ const auth = require("../middlewares/authMiddleware");
 router.post("/favorites", auth, FavoriteController.favorite);
 router.delete("/favorites/:id", auth, FavoriteController.unfavorite);
 router.get("/favorites", auth, FavoriteController.getFavorites);
-router.get("/favorites/count/user", FavoriteController.countFavoritesByUser);
-router.get("/favorites/count/game/:id", FavoriteController.countFavoritesByGame);
+router.get("/favorites/count/user", auth, FavoriteController.countFavoritesByUser);
+router.get("/favorites/count/game/:id", auth, FavoriteController.countFavoritesByGame);
 
 module.exports = router
